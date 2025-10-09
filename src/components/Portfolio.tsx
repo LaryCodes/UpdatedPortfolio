@@ -78,7 +78,7 @@ export default function Portfolio() {
       <Navigation isScrolled={isScrolled} activeSection={activeSection} />
       
       {/* Main Content */}
-      <main className="relative z-10 mt-20 pt-16 sm:pt-20">
+      <main className="relative z-10 mt-20">
         <HeroSection />
         <SkillsSection />
         <ProjectsSection />
