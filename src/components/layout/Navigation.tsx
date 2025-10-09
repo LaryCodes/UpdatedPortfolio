@@ -63,34 +63,38 @@ export const Navigation = ({ isScrolled, activeSection }: NavigationProps) => {
     <>
       {/* Main Navigation */}
       <nav
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+        className={`fixed top-0 left-0 right-0 transition-all duration-500 ${
+          isMobileMenuOpen ? 'lg:z-50 z-30' : 'z-50'
+        } ${
           isScrolled
             ? 'bg-black/80 backdrop-blur-xl border-b border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.3)]'
             : 'bg-transparent'
         }`}
       >
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="flex items-center justify-between h-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <div className="flex items-center justify-between h-16 sm:h-20">
             
             {/* Logo */}
-            <div className="flex items-center space-x-3">
-              <div className="relative group">
-                <a href="/face.jpeg" className='hidden sm:block' target="_blank" rel="noopener noreferrer">
-                <Image
-                 src="/face2.jpeg"
-                 alt="Muhammad Laraib"
-                 className=" w-12 h-12 rounded-lg object-cover transition-all duration-300 group-hover:scale-110 group-hover:rotate-12"
-                /> 
+            <div className="flex items-center space-x-2 sm:space-x-3 min-w-0 flex-1">
+              <div className="relative group flex-shrink-0">
+                <a href="/face.jpeg" target="_blank" rel="noopener noreferrer">
+                  <Image
+                    src="/face2.jpeg"
+                    width={40}
+                    height={40}
+                    alt="Muhammad Laraib"
+                    className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg object-cover transition-all duration-300 group-hover:scale-110 group-hover:rotate-12"
+                  /> 
                 </a>
                 <div className="absolute inset-0 pointer-events-none rounded-lg blur-lg opacity-30 group-hover:opacity-60 transition-opacity duration-300 bg-gradient-to-r from-yellow-400 to-cyan-400">
                 </div>
               </div>
 
-              <div className="">
-                <h1 className="text-sm sm:text-xl sm:font-bold bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
+              <div className="flex flex-col min-w-0">
+                <h1 className="text-sm sm:text-xl font-semibold sm:font-bold bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent leading-tight truncate">
                   Muhammad Laraib
                 </h1>
-                <p className="text-xs text-gray-400">Full Stack Developer</p>
+                <p className="text-xs text-gray-400 leading-tight truncate">Full Stack Developer</p>
               </div>
             </div>
 
@@ -188,13 +192,13 @@ export const Navigation = ({ isScrolled, activeSection }: NavigationProps) => {
       >
         {/* Backdrop */}
         <div
-          className="absolute inset-0 bg-black/80 backdrop-blur-xl"
+          className="absolute inset-0 bg-black/90 backdrop-blur-2xl"
           onClick={() => setIsMobileMenuOpen(false)}
         ></div>
 
         {/* Mobile Menu Content */}
         <div
-          className={`absolute top-0 right-0 h-full w-80 max-w-[90vw] bg-gradient-to-b from-gray-900 to-black border-l border-white/10 transform transition-transform duration-500 ${
+          className={`absolute top-0 right-0 h-full w-80 max-w-[90vw] bg-gradient-to-b from-gray-900 via-gray-900 to-black border-l border-white/10 shadow-2xl transform transition-transform duration-500 ${
             isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
           }`}
         >
@@ -203,11 +207,18 @@ export const Navigation = ({ isScrolled, activeSection }: NavigationProps) => {
             {/* Mobile Header */}
             <div className="flex items-center justify-between mb-8">
               <div className="flex items-center space-x-3">
-                <div className="w-10 h-10 bg-gradient-to-r from-yellow-400 to-cyan-400 rounded-lg flex items-center justify-center font-bold text-lg text-black">
-                  ML
+                <div className="relative group">
+                  <Image
+                    src="/face2.jpeg"
+                    width={48}
+                    height={48}
+                    alt="Muhammad Laraib"
+                    className="w-12 h-12 rounded-lg object-cover ring-2 ring-yellow-400/30"
+                  />
+                  <div className="absolute inset-0 pointer-events-none rounded-lg blur-lg opacity-40 bg-gradient-to-r from-yellow-400 to-cyan-400"></div>
                 </div>
                 <div>
-                  <h2 className="font-bold text-white">Muhammad Laraib</h2>
+                  <h2 className="font-bold text-white text-base">Muhammad Laraib</h2>
                   <p className="text-sm text-gray-400">Full Stack Developer</p>
                 </div>
               </div>
