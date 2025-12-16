@@ -133,7 +133,7 @@ export const HeroSection = () => {
                   src="/me.png"
                   fill
                   alt="Muhammad Laraib"
-                  className="relative w-full h-full rounded-full object-cover border-4 border-yellow-400 transition-all duration-500 hover:scale-105 hover:rotate-3 hover:border-cyan-400 shadow-2xl"
+                  className="relative w-full h-full rounded-full object-cover object-[center_20%] border-4 border-yellow-400 transition-all duration-500 hover:scale-105 hover:rotate-3 hover:border-cyan-400 shadow-2xl"
                 />
                 
                 {/* Decorative elements */}
