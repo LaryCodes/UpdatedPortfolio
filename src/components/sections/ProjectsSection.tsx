@@ -12,89 +12,36 @@ import {
 import { NeonCard } from '../ui/NeonCard';
 import { SectionTitle } from '../ui/SectionTitle';
 import Link from 'next/link';
+import { projectsData as importedProjects, projectCategories as importedCategories, projectStats as importedStats } from '@/lib/data/projects';
 
-const projectsData = [
-  {
-    id: 1,
-    title: "InterviewXpert ",
-    category: "AI/Web Development",
-    description: "AI-Powered Virtual Interview Simulator with role-based mock interviews and dynamic AI-generated questions",
-    technologies: ["Flask", "Next.js", "Python", "AI/ML", "JavaScript"],
-    image: "/xpert.jpeg",
-    status: "Completed",
-    featured: true,
-    stats: {
-      views: "2.5K",
-      likes: 89,
-      comments: 23
-    },
-    highlights: [
-      "🏆 1st Position in University Software Expo",
-      "🤖 Role-based mock interviews (HR, Developer, etc.)",
-      "⚡ Dynamic AI-generated questions",
-      "🌐 Flask backend with Next.js frontend"
-    ],
-    demoUrl: "#",
-    githubUrl: "#",
-    year: "2024"
+// Transform imported data to match component's expected format
+const projectsData = importedProjects.map((project, index) => ({
+  id: project.id,
+  title: project.title,
+  category: project.category,
+  description: project.description,
+  technologies: project.tech,
+  image: project.image,
+  status: project.status,
+  featured: index < 3, // First 3 projects are featured
+  stats: {
+    views: project.stats.views,
+    likes: parseInt(project.stats.likes) || 0,
+    comments: parseInt(project.stats.comments) || 0
   },
-  {
-    id: 2,
-    title: "Intruviate",
-    category: "Desktop/AI",
-    description: "Advanced Desktop Interview Simulator with Real-time Gesture Tracking and Voice Interaction",
-    technologies: ["Java", "JavaFX", "MaryTTS", "Computer Vision", "OOP"],
-    image: "/1.jpeg",
-    status: "Completed",
-    featured: true,
-    stats: {
-      views: "1.8K",
-      likes: 67,
-      comments: 18
-    },
-    highlights: [
-      "👁️ Real-time gesture tracking for behavioral evaluation",
-      "🔊 Text-to-speech (MaryTTS) for question narration",
-      "🏗️ Advanced OOP principles in Java",
-      "💻 Desktop-based application with JavaFX"
-    ],
-    demoUrl: "#",
-    githubUrl: "#",
-    year: "2024"
-  },
-  {
-    id: 3,
-    title: "E-Commerce Web App",
-    category: "Full Stack",
-    description: "Modern responsive online storefront with secure payment integration and user authentication",
-    technologies: ["Next.js", "TypeScript", "Payment Gateway", "Authentication", "SSR"],
-    image: "/Ecom.jpeg",
-    status: "Completed",
-    featured: true,
-    stats: {
-      views: "3.2K",
-      likes: 124,
-      comments: 31
-    },
-    highlights: [
-      "🛒 Complete e-commerce functionality",
-      "🔒 Secure payment gateway integration",
-      "🛡️ Route protection for authenticated pages",
-      "⚡ Server-side rendering with Next.js"
-    ],
-    demoUrl: "https://bandage-xi.vercel.app/",
-    githubUrl: "https://github.com/larycodes/bandage",
-    year: "2024"
-  }
-];
+  highlights: project.achievements,
+  demoUrl: project.live,
+  githubUrl: project.github,
+  year: project.year
+}));
 
-const projectCategories = ['All Projects', 'AI/Web Development', 'Desktop/AI', 'Full Stack'];
+const projectCategories = ['All Projects', ...Array.from(new Set(importedProjects.map(p => p.category)))];
 
 const projectStats = {
-  totalProjects: '10+',
-  completedProjects: '8',
-  totalViews: '15K+',
-  averageRating: '4.9★'
+  totalProjects: String(importedStats.totalProjects),
+  completedProjects: String(importedStats.completedProjects),
+  totalViews: importedStats.totalViews,
+  averageRating: importedStats.averageRating
 };
 
 export const ProjectsSection = () => {
@@ -298,10 +245,12 @@ export const ProjectsSection = () => {
                 <div className="flex gap-3 pt-2">
                   <a 
                     href={project.demoUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="flex-1 flex items-center justify-center gap-2 py-2 px-4 bg-gradient-to-r from-yellow-400 to-orange-500 text-black rounded-full font-medium hover:scale-105 transition-all duration-300 text-sm"
                   >
                     <ExternalLink className="w-3 h-3" />
-                    Live Demo
+                    Details
                   </a>
                   <a 
                     href={project.githubUrl}
