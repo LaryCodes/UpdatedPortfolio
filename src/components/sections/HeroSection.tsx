@@ -150,12 +150,14 @@ export const HeroSection = () => {
                   <div className="p-4 sm:p-6 flex flex-col items-center space-y-3 sm:space-y-4">
                     {/* Profile Photo */}
                     <div className="relative w-24 h-24 sm:w-32 sm:h-32 lg:w-36 lg:h-36 rounded-xl overflow-hidden border-2 border-white/20 shadow-lg">
+                    <a href="/me.png" target="_blank" rel="noopener noreferrer">
                       <Image
                         src="/me.png"
                         fill
                         alt="Muhammad Laraib"
                         className="object-cover object-[center_20%]"
                       />
+                      </a>
                     </div>
                     
                     {/* Name */}
