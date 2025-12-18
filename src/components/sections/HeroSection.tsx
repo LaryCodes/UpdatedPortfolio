@@ -122,23 +122,72 @@ export const HeroSection = () => {
               </div>
             </div>
             
-            {/* Right Column - Profile Image */}
+            {/* Right Column - Lanyard ID Card */}
             <div className="flex justify-center lg:justify-end order-1 lg:order-2">
-              <div className="relative w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96">
-                {/* Glowing ring effect */}
-                <div className="absolute inset-0 rounded-full animate-pulse bg-gradient-to-r from-yellow-400/20 via-cyan-400/20 to-purple-500/20 blur-2xl scale-110" />
-                
-                {/* Profile Image */}
-                <Image
-                  src="/me.png"
-                  fill
-                  alt="Muhammad Laraib"
-                  className="relative w-full h-full rounded-full object-cover object-[center_20%] border-4 border-yellow-400 transition-all duration-500 hover:scale-105 hover:rotate-3 hover:border-cyan-400 shadow-2xl"
-                />
-                
-                {/* Decorative elements */}
-                <div className="absolute -top-4 -right-4 w-8 h-8 bg-yellow-400 rounded-full animate-bounce delay-1000" />
-                <div className="absolute -bottom-4 -left-4 w-6 h-6 bg-cyan-400 rounded-full animate-bounce delay-2000" />
+              <div className="relative flex flex-col items-center">
+                {/* Lanyard Strap - hidden on mobile, visible on larger screens */}
+                <div className="relative hidden sm:block">
+                  {/* Strap going up and out of view */}
+                  <div className="absolute left-1/2 -translate-x-1/2 -top-32 sm:-top-40 w-4 sm:w-5 h-32 sm:h-40 bg-gradient-to-b from-yellow-500 to-yellow-400 rounded-t-full" />
+                  
+                  {/* Clip/Hook */}
+                  <div className="absolute left-1/2 -translate-x-1/2 -top-3 z-20">
+                    <div className="w-6 h-6 sm:w-8 sm:h-8 bg-gradient-to-b from-gray-300 to-gray-400 rounded-full border-2 border-gray-500 shadow-lg flex items-center justify-center">
+                      <div className="w-2 h-2 sm:w-3 sm:h-3 bg-gray-600 rounded-full" />
+                    </div>
+                  </div>
+                </div>
+
+                {/* ID Card */}
+                <div className="relative w-52 sm:w-64 lg:w-72 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 rounded-2xl border-2 border-yellow-400/50 shadow-[0_0_40px_rgba(255,255,0,0.2)] overflow-hidden transition-all duration-500 hover:scale-105 hover:shadow-[0_0_60px_rgba(255,255,0,0.3)] hover:border-cyan-400/50">
+                  
+                  {/* Card Header */}
+                  <div className="bg-gradient-to-r from-yellow-400 to-orange-500 px-4 py-2 sm:py-3">
+                    <p className="text-black text-xs sm:text-sm font-bold text-center tracking-wider">DEVELOPER ID</p>
+                  </div>
+                  
+                  {/* Card Body */}
+                  <div className="p-4 sm:p-6 flex flex-col items-center space-y-3 sm:space-y-4">
+                    {/* Profile Photo */}
+                    <div className="relative w-24 h-24 sm:w-32 sm:h-32 lg:w-36 lg:h-36 rounded-xl overflow-hidden border-2 border-white/20 shadow-lg">
+                      <Image
+                        src="/me.png"
+                        fill
+                        alt="Muhammad Laraib"
+                        className="object-cover object-[center_20%]"
+                      />
+                    </div>
+                    
+                    {/* Name */}
+                    <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-white text-center">
+                      {personalInfo.name}
+                    </h3>
+                    
+                    {/* Title */}
+                    <p className="text-xs sm:text-sm text-cyan-400 font-medium text-center">
+                      Full Stack Developer
+                    </p>
+                    
+                    {/* Divider */}
+                    <div className="w-full h-px bg-gradient-to-r from-transparent via-yellow-400/50 to-transparent" />
+                    
+                    {/* Barcode-like decoration */}
+                    <div className="flex gap-0.5 sm:gap-1 items-end h-6 sm:h-8">
+                      {[3, 5, 2, 6, 4, 3, 5, 2, 6, 4, 3, 5, 2, 4].map((h, i) => (
+                        <div 
+                          key={i} 
+                          className="w-1 sm:w-1.5 bg-white/30 rounded-sm"
+                          style={{ height: `${h * 4}px` }}
+                        />
+                      ))}
+                    </div>
+                    
+                    {/* ID Number */}
+                    <p className="text-[10px] sm:text-xs text-gray-500 font-mono tracking-widest">
+                      ID: LC-2024-001
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

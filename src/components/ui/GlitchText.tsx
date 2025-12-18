@@ -8,18 +8,6 @@ interface GlitchTextProps {
 
 export const GlitchText: React.FC<GlitchTextProps> = ({ children, className = "" }) => (
   <div className={`relative ${className}`}>
-    <span className="relative z-10">{children}</span>
-    <span 
-      className="absolute top-0 left-0 text-cyan-50 opacity-0 animate-pulse" 
-      style={{ transform: 'translate(-2px, -1px)' }}
-    >
-      {children}
-    </span>
-    <span 
-      className="absolute top-0 left-0 text-yellow-400 opacity-70 animate-pulse" 
-      style={{ transform: 'translate(2px, 1px)' }}
-    >
-      {children}
-    </span>
+    <span className="relative z-10 drop-shadow-[0_0_10px_rgba(255,255,0,0.3)]">{children}</span>
   </div>
 );
