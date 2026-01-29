@@ -124,32 +124,45 @@ const LoadingScreen = () => {
   }, []);
 
   return (
-    <div className="fixed inset-0 bg-black flex items-center justify-center z-50">
-      <div className="text-center">
-        {/* Loading Animation */}
-        <div className="relative mb-8">
-          <div className="w-20 h-20 border-4 border-gray-800 rounded-full animate-spin">
-            <div className="absolute inset-0 border-4 border-transparent border-t-yellow-400 rounded-full animate-spin"></div>
+    <div className="fixed inset-0 bg-gradient-to-br from-black via-gray-900 to-black flex items-center justify-center z-50">
+      <div className="text-center relative">
+        {/* Animated Circles Background */}
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div className="w-32 h-32 border-2 border-yellow-400/20 rounded-full animate-ping"></div>
+          <div className="absolute w-24 h-24 border-2 border-cyan-400/20 rounded-full animate-ping" style={{ animationDelay: '0.5s' }}></div>
+        </div>
+
+        {/* Main Loading Circle */}
+        <div className="relative mb-8 flex items-center justify-center">
+          <div className="w-24 h-24 border-4 border-gray-800 rounded-full relative">
+            <div className="absolute inset-0 border-4 border-transparent border-t-yellow-400 border-r-cyan-400 rounded-full animate-spin"></div>
           </div>
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div className="w-12 h-12 bg-gradient-to-r from-yellow-400 to-cyan-400 rounded-full animate-pulse"></div>
-          </div>
+          <div className="absolute w-16 h-16 bg-gradient-to-br from-yellow-400 to-cyan-400 rounded-full animate-pulse blur-sm"></div>
+          <div className="absolute w-12 h-12 bg-gradient-to-br from-yellow-400 to-cyan-400 rounded-full"></div>
         </div>
 
         {/* Loading Text */}
-        <div className="text-2xl font-bold bg-gradient-to-r from-yellow-400 to-cyan-400 bg-clip-text text-transparent mb-4">
-          MUHAMMAD LARAIB
+        <div className="text-3xl sm:text-4xl font-bold mb-2">
+          <span className="bg-gradient-to-r from-yellow-400 via-orange-400 to-cyan-400 bg-clip-text text-transparent animate-pulse">
+            MUHAMMAD
+          </span>
+          {' '}
+          <span className="bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent animate-pulse" style={{ animationDelay: '0.2s' }}>
+            LARAIB
+          </span>
         </div>
         
         {/* Progress Bar */}
-        <div className="w-64 h-2 bg-gray-800 rounded-full overflow-hidden">
+        <div className="w-72 sm:w-96 h-1.5 bg-gray-800 rounded-full overflow-hidden mx-auto mt-6 relative">
           <div 
-            className="h-full bg-gradient-to-r from-yellow-400 to-cyan-400 rounded-full transition-all duration-300"
+            className="h-full bg-gradient-to-r from-yellow-400 via-orange-400 to-cyan-400 rounded-full transition-all duration-300 relative"
             style={{ width: `${progress}%` }}
-          ></div>
+          >
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent animate-shimmer"></div>
+          </div>
         </div>
         
-        <div className="text-gray-400 mt-2 text-sm">
+        <div className="text-gray-400 mt-3 text-sm font-medium">
           {progress}% Loading...
         </div>
       </div>
@@ -225,6 +238,11 @@ export const portfolioStyles = `
     50% { opacity: 0.1; transform: scale(1.1); }
   }
 
+  @keyframes shimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+  }
+
   .animate-float-slow {
     animation: float-slow 8s ease-in-out infinite;
   }
@@ -239,6 +257,10 @@ export const portfolioStyles = `
 
   .animate-pulse-slow {
     animation: pulse-slow 6s ease-in-out infinite;
+  }
+
+  .animate-shimmer {
+    animation: shimmer 2s ease-in-out infinite;
   }
 
   /* Smooth scrolling */

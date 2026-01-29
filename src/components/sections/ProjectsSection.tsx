@@ -7,23 +7,24 @@ import {
   Play, ExternalLink, Eye, Heart, MessageCircle, 
   Zap, Github, Calendar, Users, Clock, Award,
   Star, Rocket, Trophy, Target, Brain, Monitor,
-  ShoppingCart, Code2, Coffee
+  ShoppingCart, Code2, Coffee, Server
 } from 'lucide-react';
 import { NeonCard } from '../ui/NeonCard';
 import { SectionTitle } from '../ui/SectionTitle';
 import Link from 'next/link';
-import { projectsData as importedProjects, projectCategories as importedCategories, projectStats as importedStats } from '@/lib/data/projects';
+import { projectsData as importedProjects, projectCategories as projectCategoriesData, projectStats as importedStats } from '@/lib/data/projects';
 
 // Transform imported data to match component's expected format
 const projectsData = importedProjects.map((project, index) => ({
   id: project.id,
   title: project.title,
   category: project.category,
+  categories: project.categories || [project.category],
   description: project.description,
   technologies: project.tech,
   image: project.image,
   status: project.status,
-  featured: index < 3, // First 3 projects are featured
+  featured: index < 6, // First 6 projects are featured
   stats: {
     views: project.stats.views,
     likes: parseInt(project.stats.likes) || 0,
@@ -35,7 +36,8 @@ const projectsData = importedProjects.map((project, index) => ({
   year: project.year
 }));
 
-const projectCategories = ['All Projects', ...Array.from(new Set(importedProjects.map(p => p.category)))];
+// Simplified categories
+const projectCategories = projectCategoriesData;
 
 const projectStats = {
   totalProjects: String(importedStats.totalProjects),
@@ -46,11 +48,14 @@ const projectStats = {
 
 export const ProjectsSection = () => {
   const [selectedCategory, setSelectedCategory] = useState('All Projects');
-  const [selectedProject, setSelectedProject] = useState<number | null>(null);
+  const [showAll, setShowAll] = useState(false);
 
   const filteredProjects = selectedCategory === 'All Projects' 
     ? projectsData 
-    : projectsData.filter(project => project.category.includes(selectedCategory));
+    : projectsData.filter(project => project.categories.includes(selectedCategory));
+
+  // Show only 6 projects initially, all when "showAll" is true
+  const displayedProjects = showAll ? filteredProjects : filteredProjects.slice(0, 6);
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -62,9 +67,11 @@ export const ProjectsSection = () => {
 
   const getCategoryIcon = (category: string) => {
     switch (category) {
-      case 'AI/Web Development': return Brain;
-      case 'Desktop/AI': return Monitor;
-      case 'Full Stack': return Code2;
+      case 'AI Systems': return Brain;
+      case 'Full-Stack Applications': return Code2;
+      case 'Web Experiences': return Monitor;
+      case 'Products & SaaS': return Rocket;
+      case 'Systems & Automation': return Server;
       default: return Rocket;
     }
   };
@@ -118,12 +125,12 @@ export const ProjectsSection = () => {
           })}
         </div>
 
-        {/* Projects Grid */}
+        {/* Projects Grid - Fixed height cards */}
         <div className="grid lg:grid-cols-2 xl:grid-cols-3 gap-8">
-          {filteredProjects.map((project, index) => (
+          {displayedProjects.map((project, index) => (
             <NeonCard 
               key={project.id} 
-              className="group hover:-translate-y-4 transition-all duration-700 cursor-pointer overflow-hidden"
+              className="group hover:-translate-y-4 transition-all duration-700 cursor-pointer overflow-hidden flex flex-col h-full"
               glowColor={index % 2 === 0 ? "cyan" : "yellow"}
             >
               {/* Project Image */}
@@ -194,24 +201,21 @@ export const ProjectsSection = () => {
               </div>
 
               {/* Project Content */}
-              <div className="space-y-4">
-                {/* Title and Year */}
+              <div className="space-y-4 flex-1 flex flex-col">
+                {/* Title */}
                 <div className="flex justify-between items-start">
                   <h3 className="text-xl font-bold bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent group-hover:from-yellow-400 group-hover:to-cyan-400 transition-all duration-300">
                     {project.title}
                   </h3>
-                  <span className="text-sm text-gray-400 bg-black/40 px-2 py-1 rounded-full">
-                    {project.year}
-                  </span>
                 </div>
 
-                {/* Description */}
-                <p className="text-gray-300 text-sm leading-relaxed">
+                {/* Description - Fixed height with line clamp */}
+                <p className="text-gray-300 text-sm leading-relaxed line-clamp-3">
                   {project.description}
                 </p>
 
                 {/* Highlights */}
-                <div className="space-y-2">
+                <div className="space-y-2 min-h-[48px]">
                   {project.highlights.slice(0, 2).map((highlight, idx) => (
                     <div key={idx} className="text-xs text-gray-400 flex items-center gap-2">
                       <div className="w-1 h-1 bg-gradient-to-r from-yellow-400 to-cyan-400 rounded-full"></div>
@@ -221,11 +225,11 @@ export const ProjectsSection = () => {
                 </div>
 
                 {/* Technologies */}
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap gap-2 min-h-[60px]">
                   {project.technologies.slice(0, 4).map((tech, idx) => (
                     <span 
                       key={tech} 
-                      className={`text-xs px-2 py-1 rounded-full ${
+                      className={`text-xs px-2 py-1 rounded-full h-fit ${
                         idx % 2 === 0 
                           ? 'bg-yellow-400/20 text-yellow-400 border border-yellow-400/30' 
                           : 'bg-cyan-400/20 text-cyan-400 border border-cyan-400/30'
@@ -235,14 +239,14 @@ export const ProjectsSection = () => {
                     </span>
                   ))}
                   {project.technologies.length > 4 && (
-                    <span className="text-xs px-2 py-1 rounded-full bg-gray-400/20 text-gray-400 border border-gray-400/30">
+                    <span className="text-xs px-2 py-1 rounded-full bg-gray-400/20 text-gray-400 border border-gray-400/30 h-fit">
                       +{project.technologies.length - 4} more
                     </span>
                   )}
                 </div>
 
-                {/* Action Links */}
-                <div className="flex gap-3 pt-2">
+                {/* Action Links - Push to bottom */}
+                <div className="flex gap-3 pt-2 mt-auto">>
                   <a 
                     href={project.demoUrl}
                     target="_blank"
@@ -264,6 +268,18 @@ export const ProjectsSection = () => {
             </NeonCard>
           ))}
         </div>
+
+        {/* View All / Show Less Button */}
+        {filteredProjects.length > 6 && (
+          <div className="text-center mt-12">
+            <button
+              onClick={() => setShowAll(!showAll)}
+              className="px-8 py-3 bg-gradient-to-r from-cyan-400 to-blue-500 text-black rounded-full font-bold hover:scale-110 transition-all duration-300 shadow-[0_0_30px_rgba(0,255,255,0.3)]"
+            >
+              {showAll ? 'Show Less' : `View All ${filteredProjects.length} Projects`}
+            </button>
+          </div>
+        )}
 
         {/* Call to Action */}
         <div className="text-center mt-16">

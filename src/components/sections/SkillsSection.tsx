@@ -61,10 +61,10 @@ export const SkillsSection = () => {
                 <div className="relative">
                   <div className="w-full bg-gray-800 rounded-full h-3 overflow-hidden">
                     <div 
-                      className={`h-full bg-gradient-to-r ${skill.color} rounded-full transition-all duration-2000 shadow-lg`}
+                      className="h-full rounded-full shadow-lg"
                       style={{ 
                         width: `${skill.level}%`,
-                        animation: `fillBar 2s ease-out ${index * 0.2}s both`
+                        backgroundImage: `linear-gradient(to right, #fbbf24, #f97316)`
                       }}
                     ></div>
                   </div>
@@ -102,12 +102,12 @@ export const SkillsSection = () => {
                       </div>
                       
                       <div className="relative">
-                        <div className="w-full bg-gray-700 rounded-full h-2">
+                        <div className="w-full bg-gray-700 rounded-full h-2 overflow-hidden">
                           <div 
-                            className={`h-full bg-gradient-to-r ${skill.color} rounded-full transition-all duration-1500`}
+                            className="h-full rounded-full"
                             style={{ 
                               width: `${skill.level}%`,
-                              animation: `fillBar 1.5s ease-out ${(categoryIndex * 0.5) + (skillIndex * 0.1)}s both`
+                              backgroundImage: 'linear-gradient(to right, #06b6d4, #3b82f6)'
                             }}
                           ></div>
                         </div>
@@ -146,12 +146,12 @@ export const SkillsSection = () => {
                   </div>
                   
                   <div className="relative">
-                    <div className="w-full bg-gray-700 rounded-full h-3">
+                    <div className="w-full bg-gray-700 rounded-full h-3 overflow-hidden">
                       <div 
-                        className={`h-full bg-gradient-to-r ${skill.color} rounded-full transition-all duration-2000`}
+                        className="h-full rounded-full"
                         style={{ 
                           width: `${skill.level}%`,
-                          animation: `fillBar 2s ease-out ${index * 0.3}s both`
+                          backgroundImage: 'linear-gradient(to right, #a855f7, #ec4899)'
                         }}
                       ></div>
                     </div>
@@ -165,18 +165,6 @@ export const SkillsSection = () => {
           </div>
         </div>
       </div>
-
-      {/* CSS Animation */}
-      <style jsx>{`
-        @keyframes fillBar {
-          from {
-            width: 0%;
-          }
-          to {
-            width: var(--final-width);
-          }
-        }
-      `}</style>
     </section>
   );
 };

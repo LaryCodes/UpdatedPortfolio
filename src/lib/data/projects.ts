@@ -9,6 +9,7 @@ export const projectsData = [
     tech: ['Next.js', 'Flask', 'Python', 'AI/ML', 'REST API', 'Responsive Design'],
     image: '/xpert.jpeg',
     category: 'AI/Web Application',
+    categories: ['AI Systems', 'Full-Stack Applications', 'Web Experiences'],
     status: 'Completed',
     year: '2024',
     stats: { 
@@ -47,6 +48,7 @@ export const projectsData = [
     tech: ['Java', 'JavaFX', 'Computer Vision', 'MaryTTS', 'OOP', 'Gesture Recognition'],
     image: '/intruviate.jpeg',
     category: 'Desktop Application/AI',
+    categories: ['AI Systems', 'Systems & Automation', 'Products & SaaS'],
     status: 'Completed', 
     year: '2024',
     stats: { 
@@ -85,6 +87,7 @@ export const projectsData = [
     tech: ['Next.js', 'TypeScript', 'Payment Gateway', 'Authentication', 'SSR', 'API Routes'],
     image: '/Ecom.jpeg',
     category: 'Full Stack Web Application',
+    categories: ['Full-Stack Applications', 'Web Experiences'],
     status: 'Completed',
     year: '2024',
     stats: { 
@@ -124,6 +127,7 @@ export const projectsData = [
     tech: ['Python', 'Flask', 'NLP', 'Machine Learning', 'OpenAI API', 'Streamlit'],
     image: '/assisstant.png',
     category: 'AI/Machine Learning',
+    categories: ['AI Systems', 'Web Experiences'],
     status: 'Completed',
     year: '2024',
     stats: { 
@@ -162,6 +166,7 @@ export const projectsData = [
     tech: ['Next.js', 'Computer Vision', 'AI/ML', 'Python', 'TensorFlow', 'Bilingual Support'],
     image: 'linear-gradient(135deg, #11998e 0%, #38ef7d 100%)',
     category: 'AI/Healthcare',
+    categories: ['AI Systems', 'Products & SaaS', 'Systems & Automation'],
     status: 'Completed',
     year: '2025',
     stats: {
@@ -200,6 +205,7 @@ export const projectsData = [
     tech: ['Next.js', 'Flask', 'Firebase', 'AI/ML', 'RAG', 'Python'],
     image: '/recyclekar.png',
     category: 'AI/Sustainability Platform',
+    categories: ['AI Systems', 'Products & SaaS', 'Full-Stack Applications'],
     status: 'In Development',
     year: '2025',
     stats: {
@@ -240,6 +246,7 @@ export const projectsData = [
     tech: ['Next.js', 'Java', 'FastAPI', 'PostgreSQL', 'OAuth', 'RAG', 'Agentic AI', 'Browser Automation'],
     image: '/credora.png',
     category: 'SaaS/FinTech',
+    categories: ['AI Systems', 'Products & SaaS', 'Systems & Automation'],
     status: 'In Development',
     year: '2025',
     stats: {
@@ -272,15 +279,128 @@ export const projectsData = [
     live: '#',
     github: '#',
     demo: '#'
+  },
+  {
+    id: 9,
+    title: 'ADDit DOit',
+    subtitle: 'AI-Powered Full-Stack Todo Application',
+    description: 'Multi-user todo application with user isolation, built with a FastAPI backend and a Next.js frontend.',
+    longDescription: 'A full-stack AI-powered todo application featuring user isolation, a FastAPI backend, and a Next.js frontend. The application allows multiple users to manage their tasks separately and includes AI-powered features.',
+    tech: ['Next.js', 'React', 'TypeScript', 'Tailwind CSS', 'FastAPI', 'Python', 'SQLModel', 'PostgreSQL', 'OpenAI'],
+    image: '/ADDitDOit.png',
+    category: 'Full Stack AI Application',
+    categories: ['Full-Stack Applications', 'AI Systems'],
+    status: 'In Development',
+    year: '2024',
+    stats: {
+      views: '1.2K',
+      likes: '95%',
+      comments: '25',
+      users: '100+'
+    },
+    achievements: [
+      '🚀 Full-stack architecture with Next.js and FastAPI',
+      '🤖 AI-powered task management features',
+      '🔒 Secure user isolation and authentication',
+      '📱 Responsive and modern user interface'
+    ],
+    features: [
+      'User-specific task management',
+      'AI-driven task suggestions',
+      'Real-time updates',
+      'Secure authentication',
+      'RESTful API'
+    ],
+    role: 'Full Stack Developer',
+    teamSize: 1,
+    duration: 'Ongoing',
+    live: '#',
+    github: '#',
+    demo: '#'
+  },
+  {
+    id: 10,
+    title: 'Physical AI & Humanoid Robotics: From Simulation to Reality',
+    subtitle: 'Interactive guide to intelligent embodied systems',
+    description: 'A comprehensive guide to building intelligent embodied systems, covering everything from simulation to real-world application. This book is built with Docusaurus.',
+    longDescription: 'This project is a comprehensive guide to building intelligent embodied systems, focusing on Physical AI and Humanoid Robotics. It takes you from the fundamentals of simulation to the complexities of real-world application. The book is presented as a Docusaurus-built website, offering an interactive and engaging learning experience.',
+    tech: ['Docusaurus', 'React', 'TypeScript', 'MDX'],
+    image: '/book.png',
+    category: 'Documentation/Book',
+    categories: ['Web Experiences', 'AI Systems'],
+    status: 'Completed',
+    year: '2024',
+    stats: {
+      views: '5K',
+      likes: '98%',
+      comments: '150',
+      readers: '2.5K+'
+    },
+    achievements: [
+      '📘 Comprehensive guide on Humanoid Robotics',
+      '🤖 Covers simulation to real-world application',
+      '🌐 Interactive and engaging learning experience',
+      '🚀 Built with modern documentation tools'
+    ],
+    features: [
+      'In-depth chapters on Physical AI',
+      'Interactive code examples',
+      'Searchable and well-organized content',
+      'Community discussion forums'
+    ],
+    role: 'Author',
+    teamSize: 1,
+    duration: 'Ongoing',
+    live: 'https://larycodes.github.io/AI-Humanoid-Book/',
+    github: 'https://github.com/LaryCodes/AI-Humanoid-Book',
+    demo: 'https://larycodes.github.io/AI-Humanoid-Book/'
+  },
+  {
+    id: 11,
+    title: 'CAVL - Computer Architecture Visual Lab',
+    subtitle: 'Interactive MIPS assembly learning platform',
+    description: 'An interactive web-based platform for learning MIPS assembly and Computer Organization concepts through real-time visualization.',
+    longDescription: 'CAVL is an educational tool designed to help students understand Computer Architecture concepts by providing instant visual feedback on MIPS assembly code execution. Unlike traditional simulators, CAVL implements core analysis logic in MIPS assembly itself, demonstrating self-referential architecture capabilities.',
+    tech: ['Next.js', 'FastAPI', 'Python', 'MIPS Assembly', 'React', 'TypeScript', 'Tailwind CSS', 'Monaco Editor', 'Framer Motion'],
+    image: '/cavl.png',
+    category: 'Educational Tool/Web Application',
+    categories: ['Full-Stack Applications', 'Systems & Automation', 'Web Experiences'],
+    status: 'Completed',
+    year: '2024',
+    stats: {
+      views: '7.5K',
+      likes: '97%',
+      comments: '180',
+      users: '800+'
+    },
+    achievements: [
+      '🖥️ Interactive Code Editor with MIPS syntax highlighting',
+      '📊 Real-time Visualization of registers, memory, and pipeline',
+      '🔍 Instruction Decoder with binary breakdown',
+      '⚡ 5-stage pipeline simulator with hazard detection'
+    ],
+    features: [
+      'MIPS-centric design with analysis in MIPS assembly',
+      '5 example programs from Hello World to heap allocators',
+      'Modern UI with dark glassmorphism design',
+      'HEX/DEC toggle for number formats'
+    ],
+    role: 'Full Stack Developer',
+    teamSize: 1,
+    duration: '4 months',
+    live: 'https://github.com/LaryCodes/CAVL-assemblyLanguage',
+    github: 'https://github.com/LaryCodes/CAVL-assemblyLanguage',
+    demo: 'https://github.com/LaryCodes/CAVL-assemblyLanguage'
   }
 ];
 
 export const projectCategories = [
   'All Projects',
-  'AI/Machine Learning', 
-  'Web Applications',
-  'Desktop Applications',
-  'Full Stack'
+  'AI Systems',
+  'Full-Stack Applications',
+  'Web Experiences',
+  'Products & SaaS',
+  'Systems & Automation'
 ];
 
 export const projectStats = {
@@ -301,6 +421,7 @@ export type Project = {
   tech: string[];
   image: string;
   category: string;
+  categories?: string[];
   status: string;
   year: string;
   stats: {

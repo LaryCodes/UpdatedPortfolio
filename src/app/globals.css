@@ -235,15 +235,6 @@ html {
   }
 }
 
-@keyframes fillBar {
-  from {
-    width: 0%;
-  }
-  to {
-    width: var(--final-width, 100%);
-  }
-}
-
 @keyframes neonGlow {
   0%, 100% {
     box-shadow: 
