@@ -61,10 +61,9 @@ export const SkillsSection = () => {
                 <div className="relative">
                   <div className="w-full bg-gray-800 rounded-full h-3 overflow-hidden">
                     <div 
-                      className="h-full rounded-full shadow-lg"
+                      className="h-full rounded-full shadow-lg bg-gradient-to-r from-yellow-400 to-orange-500"
                       style={{ 
-                        width: `${skill.level}%`,
-                        backgroundImage: `linear-gradient(to right, #fbbf24, #f97316)`
+                        width: `${skill.level}%`
                       }}
                     ></div>
                   </div>
@@ -104,10 +103,9 @@ export const SkillsSection = () => {
                       <div className="relative">
                         <div className="w-full bg-gray-700 rounded-full h-2 overflow-hidden">
                           <div 
-                            className="h-full rounded-full"
+                            className="h-full rounded-full bg-gradient-to-r from-cyan-400 to-blue-500"
                             style={{ 
-                              width: `${skill.level}%`,
-                              backgroundImage: 'linear-gradient(to right, #06b6d4, #3b82f6)'
+                              width: `${skill.level}%`
                             }}
                           ></div>
                         </div>
@@ -148,10 +146,9 @@ export const SkillsSection = () => {
                   <div className="relative">
                     <div className="w-full bg-gray-700 rounded-full h-3 overflow-hidden">
                       <div 
-                        className="h-full rounded-full"
+                        className="h-full rounded-full bg-gradient-to-r from-purple-400 to-pink-500"
                         style={{ 
-                          width: `${skill.level}%`,
-                          backgroundImage: 'linear-gradient(to right, #a855f7, #ec4899)'
+                          width: `${skill.level}%`
                         }}
                       ></div>
                     </div>

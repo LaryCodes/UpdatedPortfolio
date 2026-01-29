@@ -246,7 +246,7 @@ export const ProjectsSection = () => {
                 </div>
 
                 {/* Action Links - Push to bottom */}
-                <div className="flex gap-3 pt-2 mt-auto">>
+                <div className="flex gap-3 pt-2 mt-auto">
                   <a 
                     href={project.demoUrl}
                     target="_blank"
