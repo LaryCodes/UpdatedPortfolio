@@ -19,16 +19,21 @@ interface NavigationProps {
 
 export const Navigation = ({ isScrolled, activeSection }: NavigationProps) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [scrollProgress, setScrollProgress] = useState(0);
 
-  // Track mouse position for glow effect
+  // Track scroll progress
   useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
+    const handleScroll = () => {
+      if (typeof window === 'undefined') return;
+      const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const scrolled = window.scrollY;
+      const progress = scrollHeight > 0 ? (scrolled / scrollHeight) * 100 : 0;
+      setScrollProgress(progress);
     };
 
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
+    handleScroll(); // Initial calculation
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const navigationItems = [
@@ -177,9 +182,10 @@ export const Navigation = ({ isScrolled, activeSection }: NavigationProps) => {
         </div>
 
         {/* Progress Indicator */}
-        <div className="absolute bottom-0 left-0 h-0.5 bg-gradient-to-r from-yellow-400 to-cyan-400 transition-all duration-300"
-             style={{ width: `${(window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100}%` }}>
-        </div>
+        <div 
+          className="absolute bottom-0 left-0 h-0.5 bg-gradient-to-r from-yellow-400 to-cyan-400 transition-all duration-300"
+          style={{ width: `${scrollProgress}%` }}
+        ></div>
       </nav>
 
       {/* Mobile Menu Overlay */}

@@ -1,7 +1,7 @@
 // components/ui/CustomCursor.tsx
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 const DESKTOP_BREAKPOINT = 768;
 
@@ -20,8 +20,10 @@ const checkIsDesktop = (): boolean => {
 };
 
 export const CustomCursor = () => {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isDesktop, setIsDesktop] = useState(false);
+  const cursorRef = useRef<HTMLDivElement>(null);
+  const rafRef = useRef<number>();
+  const mousePos = useRef({ x: 0, y: 0 });
 
   // Device detection effect
   useEffect(() => {
@@ -40,17 +42,38 @@ export const CustomCursor = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // Mouse tracking effect
+  // Optimized mouse tracking with RAF
   useEffect(() => {
     // Only track mouse on desktop
-    if (!isDesktop) return;
+    if (!isDesktop || !cursorRef.current) return;
+
+    const cursor = cursorRef.current;
+    let isAnimating = false;
+
+    const updateCursorPosition = () => {
+      if (cursor) {
+        cursor.style.transform = `translate3d(${mousePos.current.x - 12}px, ${mousePos.current.y - 12}px, 0)`;
+      }
+      isAnimating = false;
+    };
 
     const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
+      mousePos.current = { x: e.clientX, y: e.clientY };
+      
+      if (!isAnimating) {
+        isAnimating = true;
+        rafRef.current = requestAnimationFrame(updateCursorPosition);
+      }
     };
     
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
+    window.addEventListener('mousemove', handleMouseMove, { passive: true });
+    
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      if (rafRef.current) {
+        cancelAnimationFrame(rafRef.current);
+      }
+    };
   }, [isDesktop]);
 
   // Don't render on non-desktop devices
@@ -60,11 +83,11 @@ export const CustomCursor = () => {
 
   return (
     <div
-      className="fixed pointer-events-none z-50 mix-blend-difference"
+      ref={cursorRef}
+      className="fixed pointer-events-none z-50 mix-blend-difference top-0 left-0"
       style={{
-        left: mousePosition.x - 12,
-        top: mousePosition.y - 12,
-        transition: 'all 0.1s ease'
+        willChange: 'transform',
+        transition: 'opacity 0.2s ease'
       }}
     >
       <div className="w-6 h-6 bg-white rounded-full opacity-80"></div>

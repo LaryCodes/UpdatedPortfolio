@@ -45,11 +45,17 @@ export default function Portfolio() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Loading effect
+  // Loading effect - reduced duration for better UX
   useEffect(() => {
+    // Check if user has visited before
+    const hasVisited = sessionStorage.getItem('hasVisited');
+    
+    const duration = hasVisited ? 500 : 1500; // Shorter for returning users
+    
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 2000);
+      sessionStorage.setItem('hasVisited', 'true');
+    }, duration);
 
     return () => clearTimeout(timer);
   }, []);

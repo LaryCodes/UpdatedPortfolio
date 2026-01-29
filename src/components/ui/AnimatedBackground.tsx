@@ -1,21 +1,29 @@
 // components/ui/AnimatedBackground.tsx
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 export const AnimatedBackground = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [isVisible, setIsVisible] = useState(true);
+  const rafRef = useRef<number>();
 
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
     
-    const ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext('2d', { alpha: true });
     if (!ctx) return;
 
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+    // Responsive canvas sizing
+    const resizeCanvas = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    };
+    resizeCanvas();
     
+    // Reduced particle count for better performance
+    const particleCount = window.innerWidth < 768 ? 30 : 50;
     const particles: Array<{
       x: number;
       y: number;
@@ -25,18 +33,20 @@ export const AnimatedBackground = () => {
       color: string;
     }> = [];
 
-    for (let i = 0; i < 100; i++) {
+    for (let i = 0; i < particleCount; i++) {
       particles.push({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
-        vx: (Math.random() - 0.5) * 2,
-        vy: (Math.random() - 0.5) * 2,
-        size: Math.random() * 3 + 1,
+        vx: (Math.random() - 0.5) * 1.5, // Reduced speed
+        vy: (Math.random() - 0.5) * 1.5,
+        size: Math.random() * 2.5 + 1,
         color: Math.random() > 0.5 ? '#FFFF00' : '#00FFFF'
       });
     }
     
     const animate = () => {
+      if (!isVisible) return; // Pause when not visible
+      
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       
       particles.forEach(particle => {
@@ -52,18 +62,42 @@ export const AnimatedBackground = () => {
         ctx.fill();
       });
       
-      requestAnimationFrame(animate);
+      rafRef.current = requestAnimationFrame(animate);
     };
     animate();
 
     const handleResize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+      resizeCanvas();
     };
 
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
+    // Intersection Observer to pause when not visible
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsVisible(entry.isIntersecting);
+      },
+      { threshold: 0 }
+    );
 
-  return <canvas ref={canvasRef} className="fixed inset-0 pointer-events-none opacity-20" />;
+    if (canvas) {
+      observer.observe(canvas);
+    }
+
+    window.addEventListener('resize', handleResize, { passive: true });
+    
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      if (rafRef.current) {
+        cancelAnimationFrame(rafRef.current);
+      }
+      observer.disconnect();
+    };
+  }, [isVisible]);
+
+  return (
+    <canvas 
+      ref={canvasRef} 
+      className="fixed inset-0 pointer-events-none opacity-20"
+      style={{ willChange: 'auto' }}
+    />
+  );
 };
