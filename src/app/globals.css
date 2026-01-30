@@ -500,6 +500,40 @@ p {
   }
 }
 
+/* Mobile Performance Optimizations */
+@media (max-width: 768px) {
+  /* Disable expensive animations on mobile */
+  .animate-pulse,
+  .animate-ping,
+  .animate-spin,
+  .animate-bounce {
+    animation: none !important;
+  }
+  
+  /* Reduce backdrop blur on mobile */
+  .backdrop-blur-md,
+  .backdrop-blur-sm {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background-color: rgba(0, 0, 0, 0.8) !important;
+  }
+  
+  /* Simplify shadows on mobile */
+  [class*="shadow-"] {
+    box-shadow: none !important;
+  }
+  
+  /* Disable will-change on mobile to save memory */
+  * {
+    will-change: auto !important;
+  }
+  
+  /* Force GPU acceleration only for transforms */
+  [style*="transform"] {
+    transform: translateZ(0);
+  }
+}
+
 
 /* ============================================
    3D SHAPES STYLES

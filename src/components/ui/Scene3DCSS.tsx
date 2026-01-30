@@ -6,8 +6,11 @@ import { useEffect, useRef, useState } from 'react';
 export const Scene3DCSS = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(true);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
+    setIsMobile(window.innerWidth < 768);
+    
     const container = containerRef.current;
     if (!container) return;
 
@@ -23,37 +26,52 @@ export const Scene3DCSS = () => {
 
     const shapes = container.querySelectorAll('.floating-tech');
     let animationId: number;
+    let lastTime = 0;
+    const fps = isMobile ? 30 : 60; // 30fps on mobile
+    const interval = 1000 / fps;
 
-    const animate = () => {
+    const animate = (currentTime: number) => {
       if (!isVisible) return; // Pause when not visible
       
-      const time = Date.now() * 0.001;
+      const deltaTime = currentTime - lastTime;
+      
+      if (deltaTime >= interval) {
+        lastTime = currentTime - (deltaTime % interval);
+        const time = currentTime * 0.001;
 
-      shapes.forEach((shape, index) => {
-        const element = shape as HTMLElement;
-        const speed = 0.2 + (index * 0.05);
-        const yOffset = Math.sin(time * speed + index) * 40;
-        const xOffset = Math.cos(time * speed * 0.7 + index) * 20;
-        const rotation = Math.sin(time * speed) * 15;
+        shapes.forEach((shape, index) => {
+          const element = shape as HTMLElement;
+          const speed = 0.15 + (index * 0.03); // Slower
+          const yOffset = Math.sin(time * speed + index) * 30; // Reduced movement
+          const xOffset = Math.cos(time * speed * 0.7 + index) * 15;
+          const rotation = Math.sin(time * speed) * 10;
 
-        element.style.transform = `
-          translate3d(${xOffset}px, ${yOffset}px, 0)
-          rotateZ(${rotation}deg)
-        `;
-      });
+          element.style.transform = `
+            translate3d(${xOffset}px, ${yOffset}px, 0)
+            rotateZ(${rotation}deg)
+          `;
+        });
+      }
 
       animationId = requestAnimationFrame(animate);
     };
 
-    animate();
+    animate(0);
+
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    window.addEventListener('resize', handleResize, { passive: true });
 
     return () => {
       if (animationId) {
         cancelAnimationFrame(animationId);
       }
       observer.disconnect();
+      window.removeEventListener('resize', handleResize);
     };
-  }, [isVisible]);
+  }, [isVisible, isMobile]);
 
   // Your most important tech stack - reduced to 10 key technologies
   const techStack = [
@@ -96,21 +114,14 @@ export const Scene3DCSS = () => {
           <div className="relative group">
             {/* Tech Icon Container */}
             <div
-              className={`w-12 h-12 sm:w-16 sm:h-16 rounded-lg sm:rounded-xl bg-gradient-to-br from-gray-900/80 to-black/80 border border-${tech.color}-400/20 backdrop-blur-md flex flex-col items-center justify-center relative overflow-hidden transition-all duration-300 hover:scale-110 hover:border-${tech.color}-400/50`}
+              className={`w-12 h-12 sm:w-16 sm:h-16 rounded-lg sm:rounded-xl bg-gradient-to-br from-gray-900/80 to-black/80 border border-${tech.color}-400/20 flex flex-col items-center justify-center relative overflow-hidden transition-all duration-300 hover:scale-110 hover:border-${tech.color}-400/50`}
               style={{
-                boxShadow: `0 0 20px rgba(0,0,0,0.5), 0 0 40px ${tech.color === 'white' ? 'rgba(255,255,255,0.1)' : 
-                  tech.color === 'cyan' ? 'rgba(6,182,212,0.2)' :
-                  tech.color === 'yellow' ? 'rgba(251,191,36,0.2)' :
-                  tech.color === 'blue' ? 'rgba(59,130,246,0.2)' :
-                  tech.color === 'green' ? 'rgba(16,185,129,0.2)' :
-                  tech.color === 'orange' ? 'rgba(249,115,22,0.2)' :
-                  tech.color === 'purple' ? 'rgba(168,85,247,0.2)' :
-                  tech.color === 'pink' ? 'rgba(236,72,153,0.2)' :
-                  tech.color === 'red' ? 'rgba(239,68,68,0.2)' : 'rgba(255,255,255,0.1)'}`
+                boxShadow: `0 0 20px rgba(0,0,0,0.5)`,
+                backdropFilter: 'blur(8px)'
               }}
             >
-              {/* Animated Glow Background */}
-              <div className={`absolute inset-0 bg-gradient-to-br from-${tech.color}-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />
+              {/* Animated Glow Background - Removed on mobile */}
+              <div className={`absolute inset-0 bg-gradient-to-br from-${tech.color}-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 hidden sm:block`} />
               
               {/* Icon */}
               <div className={`text-lg sm:text-2xl text-${tech.color}-400 relative z-10 font-bold`}>
@@ -134,8 +145,8 @@ export const Scene3DCSS = () => {
               {tech.name}
             </div>
 
-            {/* Subtle Pulse Ring - Reduced on mobile */}
-            <div className={`absolute inset-0 rounded-lg sm:rounded-xl border border-${tech.color}-400/20 animate-ping opacity-10 sm:opacity-20`} style={{ animationDuration: '3s', animationDelay: `${index * 0.2}s` }} />
+            {/* Subtle Pulse Ring - Removed on mobile */}
+            <div className={`hidden sm:block absolute inset-0 rounded-lg sm:rounded-xl border border-${tech.color}-400/20 animate-ping opacity-10 sm:opacity-20`} style={{ animationDuration: '3s', animationDelay: `${index * 0.2}s` }} />
           </div>
         </div>
       ))}

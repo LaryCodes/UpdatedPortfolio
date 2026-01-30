@@ -6,9 +6,13 @@ import { useEffect, useRef, useState } from 'react';
 export const AnimatedBackground = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [isVisible, setIsVisible] = useState(true);
+  const [isMobile, setIsMobile] = useState(false);
   const rafRef = useRef<number>();
 
   useEffect(() => {
+    // Detect mobile
+    setIsMobile(window.innerWidth < 768);
+    
     const canvas = canvasRef.current;
     if (!canvas) return;
     
@@ -22,8 +26,8 @@ export const AnimatedBackground = () => {
     };
     resizeCanvas();
     
-    // Reduced particle count for better performance
-    const particleCount = window.innerWidth < 768 ? 30 : 50;
+    // Drastically reduced particle count - 15 on mobile, 30 on desktop
+    const particleCount = window.innerWidth < 768 ? 15 : 30;
     const particles: Array<{
       x: number;
       y: number;
@@ -37,37 +41,48 @@ export const AnimatedBackground = () => {
       particles.push({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
-        vx: (Math.random() - 0.5) * 1.5, // Reduced speed
-        vy: (Math.random() - 0.5) * 1.5,
-        size: Math.random() * 2.5 + 1,
+        vx: (Math.random() - 0.5) * 1, // Slower speed
+        vy: (Math.random() - 0.5) * 1,
+        size: Math.random() * 2 + 1,
         color: Math.random() > 0.5 ? '#FFFF00' : '#00FFFF'
       });
     }
     
-    const animate = () => {
+    let lastTime = 0;
+    const fps = isMobile ? 30 : 60; // 30fps on mobile, 60fps on desktop
+    const interval = 1000 / fps;
+    
+    const animate = (currentTime: number) => {
       if (!isVisible) return; // Pause when not visible
       
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      const deltaTime = currentTime - lastTime;
       
-      particles.forEach(particle => {
-        particle.x += particle.vx;
-        particle.y += particle.vy;
+      if (deltaTime >= interval) {
+        lastTime = currentTime - (deltaTime % interval);
         
-        if (particle.x < 0 || particle.x > canvas.width) particle.vx *= -1;
-        if (particle.y < 0 || particle.y > canvas.height) particle.vy *= -1;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
         
-        ctx.beginPath();
-        ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
-        ctx.fillStyle = particle.color + '40';
-        ctx.fill();
-      });
+        particles.forEach(particle => {
+          particle.x += particle.vx;
+          particle.y += particle.vy;
+          
+          if (particle.x < 0 || particle.x > canvas.width) particle.vx *= -1;
+          if (particle.y < 0 || particle.y > canvas.height) particle.vy *= -1;
+          
+          ctx.beginPath();
+          ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+          ctx.fillStyle = particle.color + '40';
+          ctx.fill();
+        });
+      }
       
       rafRef.current = requestAnimationFrame(animate);
     };
-    animate();
+    animate(0);
 
     const handleResize = () => {
       resizeCanvas();
+      setIsMobile(window.innerWidth < 768);
     };
 
     // Intersection Observer to pause when not visible
@@ -91,13 +106,13 @@ export const AnimatedBackground = () => {
       }
       observer.disconnect();
     };
-  }, [isVisible]);
+  }, [isVisible, isMobile]);
 
   return (
     <canvas 
       ref={canvasRef} 
       className="fixed inset-0 pointer-events-none opacity-20"
-      style={{ willChange: 'auto' }}
+      style={{ willChange: isVisible ? 'contents' : 'auto' }}
     />
   );
 };

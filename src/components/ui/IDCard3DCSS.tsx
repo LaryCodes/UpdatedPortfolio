@@ -71,13 +71,13 @@ export const IDCard3DCSS = () => {
             }}
           >
             <div className="w-full h-full bg-gradient-to-br from-black via-gray-900 to-black rounded-3xl border border-yellow-400/50 shadow-[0_0_60px_rgba(255,255,0,0.4),inset_0_0_60px_rgba(255,255,0,0.1)] overflow-hidden relative">
-              {/* Animated Circuit Pattern Background */}
+              {/* Animated Circuit Pattern Background - Reduced on mobile */}
               <div className="absolute inset-0 opacity-10">
                 <div className="absolute top-0 left-0 w-full h-full">
-                  {Array.from({ length: 20 }).map((_, i) => (
+                  {Array.from({ length: window.innerWidth < 768 ? 10 : 20 }).map((_, i) => (
                     <div
                       key={i}
-                      className="absolute bg-yellow-400"
+                      className="absolute bg-yellow-400 hidden sm:block"
                       style={{
                         width: '1px',
                         height: `${Math.random() * 100}%`,
@@ -121,8 +121,8 @@ export const IDCard3DCSS = () => {
               {/* Photo with Holographic Frame */}
               <div className="flex justify-center mt-4 sm:mt-6 relative">
                 <div className="relative">
-                  {/* Rotating Ring */}
-                  <div className="absolute inset-0 -m-1.5 sm:-m-2 rounded-xl sm:rounded-2xl border-2 border-transparent bg-gradient-to-r from-yellow-400 via-cyan-400 to-purple-400 animate-spin-slow" style={{ animationDuration: '8s' }} />
+                  {/* Rotating Ring - Disabled on mobile */}
+                  <div className="hidden sm:block absolute inset-0 -m-1.5 sm:-m-2 rounded-xl sm:rounded-2xl border-2 border-transparent bg-gradient-to-r from-yellow-400 via-cyan-400 to-purple-400 animate-spin-slow" style={{ animationDuration: '8s' }} />
                   
                   {/* Photo Container */}
                   <div className="relative w-28 h-28 sm:w-36 sm:h-36 rounded-xl sm:rounded-2xl overflow-hidden border-3 sm:border-4 border-black shadow-[0_0_20px_rgba(255,255,0,0.3)] sm:shadow-[0_0_30px_rgba(255,255,0,0.3)]">
@@ -134,8 +134,8 @@ export const IDCard3DCSS = () => {
                       priority={true}
                       loading="eager"
                     />
-                    {/* Scan Line Effect */}
-                    <div className="absolute inset-0 bg-gradient-to-b from-transparent via-cyan-400/20 to-transparent animate-scan" />
+                    {/* Scan Line Effect - Disabled on mobile */}
+                    <div className="hidden sm:block absolute inset-0 bg-gradient-to-b from-transparent via-cyan-400/20 to-transparent animate-scan" />
                   </div>
 
                   {/* Corner Markers */}
@@ -230,13 +230,13 @@ export const IDCard3DCSS = () => {
             }}
           >
             <div className="w-full h-full bg-gradient-to-br from-black via-gray-900 to-black rounded-3xl border border-cyan-400/50 shadow-[0_0_60px_rgba(0,255,255,0.4),inset_0_0_60px_rgba(0,255,255,0.1)] overflow-hidden relative">
-              {/* Circuit Pattern */}
+              {/* Circuit Pattern - Reduced on mobile */}
               <div className="absolute inset-0 opacity-10">
                 <div className="absolute top-0 left-0 w-full h-full">
-                  {Array.from({ length: 15 }).map((_, i) => (
+                  {Array.from({ length: window.innerWidth < 768 ? 8 : 15 }).map((_, i) => (
                     <div
                       key={i}
-                      className="absolute bg-cyan-400"
+                      className="absolute bg-cyan-400 hidden sm:block"
                       style={{
                         width: `${Math.random() * 100}%`,
                         height: '1px',
@@ -249,9 +249,9 @@ export const IDCard3DCSS = () => {
                 </div>
               </div>
 
-              {/* Magnetic Strip */}
+              {/* Magnetic Strip - Shimmer disabled on mobile */}
               <div className="w-full h-20 bg-gradient-to-r from-gray-800 via-gray-700 to-gray-800 mt-10 relative overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-shimmer" />
+                <div className="hidden sm:block absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-shimmer" />
               </div>
 
               {/* Content */}
