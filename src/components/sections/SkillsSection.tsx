@@ -1,7 +1,7 @@
 // components/sections/SkillsSection.tsx
 'use client';
 
-import React from 'react';
+import React, { memo } from 'react';
 import { 
   Code, Server, Brain, Layers, Briefcase, Monitor,
   Database, Globe, GitBranch, Cloud, Flame, Users,
@@ -165,3 +165,5 @@ export const SkillsSection = () => {
     </section>
   );
 };
+
+export default memo(SkillsSection);

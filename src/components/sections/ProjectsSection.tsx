@@ -2,7 +2,7 @@
 'use client';
 
 import Image from 'next/image';
-import React, { useState } from 'react';
+import React, { useState, memo } from 'react';
 import { 
   Play, ExternalLink, Eye, Heart, MessageCircle, 
   Zap, Github, Calendar, Users, Clock, Award,
@@ -145,6 +145,9 @@ export const ProjectsSection = () => {
                       fill
                       className="object-cover" 
                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      loading="lazy"
+                      placeholder="blur"
+                      blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNzAwIiBoZWlnaHQ9IjQ3NSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2ZXJzaW9uPSIxLjEiLz4="
                   />
                 )}
                 <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-all duration-300"></div>
@@ -302,3 +305,5 @@ export const ProjectsSection = () => {
     </section>
   );
 };
+
+export default memo(ProjectsSection);

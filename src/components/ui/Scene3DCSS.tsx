@@ -1,19 +1,32 @@
 // components/ui/Scene3DCSS.tsx
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 export const Scene3DCSS = () => {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
 
+    // Intersection Observer to pause when not visible
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsVisible(entry.isIntersecting);
+      },
+      { threshold: 0 }
+    );
+
+    observer.observe(container);
+
     const shapes = container.querySelectorAll('.floating-tech');
     let animationId: number;
 
     const animate = () => {
+      if (!isVisible) return; // Pause when not visible
+      
       const time = Date.now() * 0.001;
 
       shapes.forEach((shape, index) => {
@@ -38,8 +51,9 @@ export const Scene3DCSS = () => {
       if (animationId) {
         cancelAnimationFrame(animationId);
       }
+      observer.disconnect();
     };
-  }, []);
+  }, [isVisible]);
 
   // Your most important tech stack - reduced to 10 key technologies
   const techStack = [
@@ -64,7 +78,10 @@ export const Scene3DCSS = () => {
     <div
       ref={containerRef}
       className="fixed inset-0 pointer-events-none z-0 overflow-hidden"
-      style={{ perspective: '1500px' }}
+      style={{ 
+        perspective: '1500px',
+        contain: 'layout style paint'
+      }}
     >
       {techStack.map((tech, index) => (
         <div
@@ -72,7 +89,8 @@ export const Scene3DCSS = () => {
           className={`floating-tech absolute ${tech.position}`}
           style={{ 
             transformStyle: 'preserve-3d',
-            willChange: 'transform'
+            transform: 'translateZ(0)', // Force GPU acceleration
+            willChange: isVisible ? 'transform' : 'auto'
           }}
         >
           <div className="relative group">

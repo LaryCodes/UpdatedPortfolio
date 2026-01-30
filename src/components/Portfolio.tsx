@@ -4,9 +4,9 @@
 import React, { useEffect, useState } from 'react';
 import { Navigation } from './layout/Navigation';
 import { HeroSection } from './sections/HeroSection';
-import { SkillsSection } from './sections/SkillsSection';
-import { ProjectsSection } from './sections/ProjectsSection';
-import { ContactSection } from './sections/ContactSection';
+import SkillsSection from './sections/SkillsSection';
+import ProjectsSection from './sections/ProjectsSection';
+import ContactSection from './sections/ContactSection';
 import { Footer } from './sections/Footer';
 import { CustomCursor } from './ui/CustomCursor';
 import { AnimatedBackground } from './ui/AnimatedBackground';
@@ -19,31 +19,42 @@ export default function Portfolio() {
   const [activeSection, setActiveSection] = useState('home');
   const [isLoading, setIsLoading] = useState(true);
 
-  // Handle scroll effects
+  // Handle scroll effects with debouncing
   useEffect(() => {
+    let timeoutId: NodeJS.Timeout;
+    
     const handleScroll = () => {
-      const scrolled = window.scrollY > 50;
-      setIsScrolled(scrolled);
-      setShowScrollTop(window.scrollY > 500);
-
-      // Update active section based on scroll position
-      const sections = ['home', 'skills', 'projects', 'contact'];
-      const currentSection = sections.find(section => {
-        const element = document.getElementById(section);
-        if (element) {
-          const rect = element.getBoundingClientRect();
-          return rect.top <= 100 && rect.bottom >= 100;
-        }
-        return false;
-      });
+      // Clear previous timeout
+      if (timeoutId) clearTimeout(timeoutId);
       
-      if (currentSection) {
-        setActiveSection(currentSection);
-      }
+      // Debounce scroll handler
+      timeoutId = setTimeout(() => {
+        const scrolled = window.scrollY > 50;
+        setIsScrolled(scrolled);
+        setShowScrollTop(window.scrollY > 500);
+
+        // Update active section based on scroll position
+        const sections = ['home', 'skills', 'projects', 'contact'];
+        const currentSection = sections.find(section => {
+          const element = document.getElementById(section);
+          if (element) {
+            const rect = element.getBoundingClientRect();
+            return rect.top <= 100 && rect.bottom >= 100;
+          }
+          return false;
+        });
+        
+        if (currentSection) {
+          setActiveSection(currentSection);
+        }
+      }, 10); // 10ms debounce
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      if (timeoutId) clearTimeout(timeoutId);
+    };
   }, []);
 
   // Loading effect - reduced duration for better UX

@@ -1,15 +1,23 @@
 // components/ui/IDCard3DCSS.tsx
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import Image from 'next/image';
 import { Brain, Code, Database, Cpu, Zap, Shield } from 'lucide-react';
 
 export const IDCard3DCSS = () => {
   const [rotation, setRotation] = useState({ x: 0, y: 0 });
   const [isFlipped, setIsFlipped] = useState(false);
+  const throttleRef = useRef<number>();
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    // Throttle mouse tracking to every 16ms (60fps)
+    if (throttleRef.current) return;
+    
+    throttleRef.current = window.setTimeout(() => {
+      throttleRef.current = undefined;
+    }, 16);
+
     const card = e.currentTarget;
     const rect = card.getBoundingClientRect();
     const x = e.clientX - rect.left;
@@ -26,6 +34,10 @@ export const IDCard3DCSS = () => {
 
   const handleMouseLeave = () => {
     setRotation({ x: 0, y: 0 });
+    if (throttleRef.current) {
+      clearTimeout(throttleRef.current);
+      throttleRef.current = undefined;
+    }
   };
 
   return (
@@ -36,9 +48,10 @@ export const IDCard3DCSS = () => {
         onMouseLeave={handleMouseLeave}
         onClick={() => setIsFlipped(!isFlipped)}
         style={{
-          transform: `rotateX(${rotation.x}deg) rotateY(${rotation.y}deg)`,
+          transform: `translateZ(0) rotateX(${rotation.x}deg) rotateY(${rotation.y}deg)`, // Force GPU
           transition: 'transform 0.1s ease-out',
-          transformStyle: 'preserve-3d'
+          transformStyle: 'preserve-3d',
+          contain: 'layout style paint'
         }}
       >
         {/* Card Container */}
@@ -118,6 +131,8 @@ export const IDCard3DCSS = () => {
                       fill
                       alt="Muhammad Laraib"
                       className="object-cover object-[center_20%]"
+                      priority={true}
+                      loading="eager"
                     />
                     {/* Scan Line Effect */}
                     <div className="absolute inset-0 bg-gradient-to-b from-transparent via-cyan-400/20 to-transparent animate-scan" />

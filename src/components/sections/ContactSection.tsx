@@ -1,7 +1,7 @@
 // components/sections/ContactSection.tsx
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, memo } from 'react';
 import { 
   Mail, Phone, MapPin, Send, User, MessageSquare, 
   Clock, CheckCircle, Github, Linkedin, Coffee,
@@ -405,3 +405,5 @@ export const ContactSection = () => {
     </section>
   );
 };
+
+export default memo(ContactSection);
