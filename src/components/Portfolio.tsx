@@ -10,6 +10,7 @@ import { ContactSection } from './sections/ContactSection';
 import { Footer } from './sections/Footer';
 import { CustomCursor } from './ui/CustomCursor';
 import { AnimatedBackground } from './ui/AnimatedBackground';
+import { Scene3DCSS } from './ui/Scene3DCSS';
 import { ArrowUp } from 'lucide-react';
 
 export default function Portfolio() {
@@ -76,6 +77,9 @@ export default function Portfolio() {
     <div className="min-h-screen bg-black text-white overflow-hidden relative">
       {/* Animated Background */}
       <AnimatedBackground />
+      
+      {/* 3D Scene - CSS Version */}
+      <Scene3DCSS />
       
       {/* Custom Cursor */}
       <CustomCursor />

@@ -499,3 +499,254 @@ p {
     scroll-behavior: auto !important;
   }
 }
+
+
+/* ============================================
+   3D SHAPES STYLES
+   ============================================ */
+
+.cube-3d {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  animation: rotateCube 20s infinite linear;
+}
+
+.cube-face {
+  position: absolute;
+  width: 150px;
+  height: 150px;
+  background: linear-gradient(135deg, rgba(251, 191, 36, 0.1), rgba(6, 182, 212, 0.1));
+  border: 2px solid rgba(251, 191, 36, 0.3);
+  backdrop-filter: blur(10px);
+}
+
+.cube-face.front  { transform: rotateY(0deg) translateZ(75px); }
+.cube-face.back   { transform: rotateY(180deg) translateZ(75px); }
+.cube-face.right  { transform: rotateY(90deg) translateZ(75px); }
+.cube-face.left   { transform: rotateY(-90deg) translateZ(75px); }
+.cube-face.top    { transform: rotateX(90deg) translateZ(75px); }
+.cube-face.bottom { transform: rotateX(-90deg) translateZ(75px); }
+
+.pyramid-3d {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  animation: rotatePyramid 15s infinite linear;
+}
+
+.pyramid-face {
+  position: absolute;
+  background: linear-gradient(135deg, rgba(6, 182, 212, 0.1), rgba(59, 130, 246, 0.1));
+  border: 2px solid rgba(6, 182, 212, 0.3);
+  backdrop-filter: blur(10px);
+}
+
+.pyramid-face.base {
+  width: 120px;
+  height: 120px;
+  transform: rotateX(-90deg) translateZ(0px);
+}
+
+.pyramid-face.side1 {
+  width: 0;
+  height: 0;
+  border-left: 60px solid transparent;
+  border-right: 60px solid transparent;
+  border-bottom: 100px solid rgba(6, 182, 212, 0.1);
+  transform: rotateY(0deg) translateZ(60px) translateY(-50px);
+}
+
+.pyramid-face.side2 {
+  width: 0;
+  height: 0;
+  border-left: 60px solid transparent;
+  border-right: 60px solid transparent;
+  border-bottom: 100px solid rgba(6, 182, 212, 0.1);
+  transform: rotateY(90deg) translateZ(60px) translateY(-50px);
+}
+
+.pyramid-face.side3 {
+  width: 0;
+  height: 0;
+  border-left: 60px solid transparent;
+  border-right: 60px solid transparent;
+  border-bottom: 100px solid rgba(6, 182, 212, 0.1);
+  transform: rotateY(180deg) translateZ(60px) translateY(-50px);
+}
+
+.pyramid-face.side4 {
+  width: 0;
+  height: 0;
+  border-left: 60px solid transparent;
+  border-right: 60px solid transparent;
+  border-bottom: 100px solid rgba(6, 182, 212, 0.1);
+  transform: rotateY(270deg) translateZ(60px) translateY(-50px);
+}
+
+.torus-3d {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: 20px solid rgba(168, 85, 247, 0.2);
+  background: transparent;
+  box-shadow: 
+    0 0 30px rgba(168, 85, 247, 0.3),
+    inset 0 0 30px rgba(168, 85, 247, 0.2);
+  animation: rotateTorus 12s infinite linear;
+  transform-style: preserve-3d;
+}
+
+.octahedron-3d {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  animation: rotateOcta 18s infinite linear;
+}
+
+.octa-face {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-left: 65px solid transparent;
+  border-right: 65px solid transparent;
+  border-bottom: 65px solid rgba(251, 191, 36, 0.15);
+  border-top: 2px solid rgba(251, 191, 36, 0.3);
+}
+
+.octa-face.face1 { transform: rotateX(0deg) translateZ(45px); }
+.octa-face.face2 { transform: rotateX(90deg) translateZ(45px); }
+.octa-face.face3 { transform: rotateX(180deg) translateZ(45px); }
+.octa-face.face4 { transform: rotateX(270deg) translateZ(45px); }
+.octa-face.face5 { transform: rotateY(90deg) translateZ(45px); }
+.octa-face.face6 { transform: rotateY(-90deg) translateZ(45px); }
+.octa-face.face7 { transform: rotateY(45deg) rotateX(45deg) translateZ(45px); }
+.octa-face.face8 { transform: rotateY(-45deg) rotateX(-45deg) translateZ(45px); }
+
+.sphere-3d {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, rgba(236, 72, 153, 0.2), rgba(168, 85, 247, 0.1));
+  border: 2px solid rgba(236, 72, 153, 0.3);
+  box-shadow: 
+    0 0 40px rgba(236, 72, 153, 0.3),
+    inset 0 0 40px rgba(168, 85, 247, 0.2);
+  animation: rotateSphere 10s infinite linear;
+  transform-style: preserve-3d;
+}
+
+/* 3D Animations */
+@keyframes rotateCube {
+  0% { transform: rotateX(0deg) rotateY(0deg); }
+  100% { transform: rotateX(360deg) rotateY(360deg); }
+}
+
+@keyframes rotatePyramid {
+  0% { transform: rotateX(0deg) rotateY(0deg); }
+  100% { transform: rotateX(360deg) rotateY(360deg); }
+}
+
+@keyframes rotateTorus {
+  0% { transform: rotateX(45deg) rotateY(0deg); }
+  100% { transform: rotateX(45deg) rotateY(360deg); }
+}
+
+@keyframes rotateOcta {
+  0% { transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg); }
+  100% { transform: rotateX(360deg) rotateY(360deg) rotateZ(360deg); }
+}
+
+@keyframes rotateSphere {
+  0% { transform: rotateY(0deg); }
+  100% { transform: rotateY(360deg); }
+}
+
+/* Responsive 3D - Hide on mobile for performance */
+@media (max-width: 768px) {
+  .shape-3d {
+    display: none;
+  }
+}
+
+/* Reduced motion support for 3D */
+@media (prefers-reduced-motion: reduce) {
+  .cube-3d,
+  .pyramid-3d,
+  .torus-3d,
+  .octahedron-3d,
+  .sphere-3d {
+    animation: none !important;
+  }
+  
+  .shape-3d {
+    transition: none !important;
+  }
+}
+
+
+/* ============================================
+   CSS 3D CARD STYLES
+   ============================================ */
+
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+/* Smooth 3D transforms */
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+
+
+/* ============================================
+   ELITE CARD ANIMATIONS
+   ============================================ */
+
+@keyframes scan {
+  0%, 100% {
+    transform: translateY(-100%);
+  }
+  50% {
+    transform: translateY(100%);
+  }
+}
+
+@keyframes gradient {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-scan {
+  animation: scan 3s ease-in-out infinite;
+}
+
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradient 3s ease infinite;
+}
+
+.animate-spin-slow {
+  animation: spin-slow 8s linear infinite;
+}
